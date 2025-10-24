@@ -22,6 +22,7 @@ jobs:
         python3 -m venv testVenv
         source testVenv/bin/activate
         pip install -r requirements.txt
+        pip install flask gunicorn
 
     - name: Run smoke test
       run: |
