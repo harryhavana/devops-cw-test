@@ -49,4 +49,12 @@ jobs:
         push: false
         tags: weather-ml-app:1.0
         outputs: type=image,dest=/tmp/weather-ml-app
+
+    - name: Test Docker image
+      run: |
+        docker load --image /tmp/weather-ml-app
+        docker ps -a
+        docker exex -it weather-ml-app bash
+        echo "Hello from inside the container. Here are the contents..."
+        ls
           
