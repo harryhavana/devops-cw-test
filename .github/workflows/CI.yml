@@ -52,11 +52,12 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: false
-        load: true
         tags: weather-ml-app:1.0
+        outputs: type=docker,dest=weather-ml-app.tar
     
     - name:  Test Docker Image
       run: |
+        docker load --input weather-ml-app.tar
         docker ps -a
         docker exec -it weather-ml-app bash
         echo "Hello from inside the container"
