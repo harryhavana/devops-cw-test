@@ -52,6 +52,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: false
+        load: true
         tags: weather-ml-app:1.0
     
     - name:  Test Docker Image
