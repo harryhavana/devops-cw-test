@@ -51,10 +51,13 @@ jobs:
     - name: Test Docker image
       run: |
         docker image ls -a
-        docker container run --rm --detach --name test test
-        docker ps -a
-        docker exec -i test sh
-        echo "Hello from inside the container, here's a list of contents..."
-        ls -la
+        docker container run --rm --detach --name test test bash
+
+    - name: Run command in container
+      uses: addnab/docker-run-action@v3
+      with:
+        image: test
+        run: echo "hello world"
+        
       
           
