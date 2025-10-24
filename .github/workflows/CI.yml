@@ -43,15 +43,10 @@ jobs:
         python3 -m unittest tests/unit_test.py
 
     - name: Build Docker Image
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v5
       with:
+        context: .
         push: false
         tags: weather-ml-app:1.0
-
-    - name: Test Docker Image
-      uses: addnab/docker-run-action@v3
-      with:
-        image: weather-ml-app:1.0
-        run:
-          echo "hello world"
+        outputs: type=docker,dest=/tmp/myimage.tar
           
