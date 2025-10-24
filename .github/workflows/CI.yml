@@ -47,12 +47,12 @@ jobs:
       with:
         context: .
         load: true
-        tags: weather-ml-app:1.0
+        tags: weather-ml-app
         
     - name: Test Docker image
       run: |
-        docker container run --detach --publish 5000:5000 weather-ml-app:1.0
-        docker exec -it weather-ml-app:1.0 sh
+        docker container run --detach weather-ml-app
+        docker exec -it weather-ml-app sh
         echo "Hello from inside the container. Here's some info about what's inside..."
         ls /
         ls -la
