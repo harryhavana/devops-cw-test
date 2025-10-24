@@ -48,5 +48,5 @@ jobs:
         context: .
         push: false
         tags: weather-ml-app:1.0
-        outputs: type=docker,dest=/tmp/myimage.tar
+        outputs: type=image,dest=/tmp/weather-ml-app
           
