@@ -51,6 +51,6 @@ jobs:
         
     - name: Test Docker image
       run: |
-        docker run -rm weather-ml-app:1.0
+        docker run --rm weather-ml-app:1.0
         docker ps -a
           
