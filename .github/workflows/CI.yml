@@ -46,7 +46,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         load: true
-        tags: test
+        tags: /app/test
         
     - name: Test Docker image
       run: |
@@ -56,7 +56,7 @@ jobs:
     - name: Run command in container
       uses: addnab/docker-run-action@v3
       with:
-        image: test
+        image: /app/test
         run: echo "hello world"
         
       
