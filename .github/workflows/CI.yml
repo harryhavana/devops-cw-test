@@ -52,7 +52,7 @@ jobs:
 
     - name: Test Docker image
       run: |
-        docker load --image /tmp/weather-ml-app
+        docker image load /tmp/weather-ml-app
         docker ps -a
         docker exex -it weather-ml-app bash
         echo "Hello from inside the container. Here are the contents..."
