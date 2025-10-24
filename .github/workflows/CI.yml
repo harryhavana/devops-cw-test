@@ -42,17 +42,14 @@ jobs:
         source testVenv/bin/activate
         python3 -m unittest tests/unit_test.py
 
-    - name: Build Docker Image
-      uses: docker/build-push-action@v5
+    - uses: docker/build-push-action@v2
       with:
-        load: true
-        tags: test
-        
-    - name: Test Docker image
-      run: |
-        docker image ls -a
-        docker container run --rm --detach --name test test
-        echo "Hello from inside the container. Here's the container conents..." | docker exec -t test sh
+        tags: test-image:latest
+        push: false
+    - uses: addnab/docker-run-action@v3
+      with:
+        image: test-image:latest
+        run: echo "hello world"  
         
       
           
