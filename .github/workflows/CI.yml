@@ -51,6 +51,12 @@ jobs:
         
     - name: Test Docker image
       run: |
-        docker run --rm weather-ml-app:1.0
-        docker ps -a
+        docker container run --interactive --tty --rm weather-ml-aoo:1.0 bash
+        echo "Hello from inside the container. Here's some info about what's inside..."
+        ls /
+        ls -la
+        ps aux
+        cat /etc/issue
+        docker container stop weather-ml-app
+      
           
