@@ -46,14 +46,10 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         load: true
-        tags: weather-ml-app
+        tags: test
         
     - name: Test Docker image
       run: |
-        docker run --detach weather-ml-app
-        docker exec -it weather-ml-app sh
-        echo "hello"
-        docker rm --force weather-ml-app
-        docker container stop weather-ml-app
+        docker run --rm test
       
           
