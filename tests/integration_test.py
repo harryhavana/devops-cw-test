@@ -37,12 +37,10 @@ class TestModelAppIntegration(unittest.TestCase):
 			'misty', 'rainy', 'smokey', 'thunderstorm'
 		]
 		found = any(weather in html_text for weather in valid_classes)
-
-		print("000000000000")
-		print(html_text)
 		
 		# Ensure that classification is in valid classes, provide an error message if not.
 		self.assertTrue(found, "No valid weather class found in HTML response")
 
 if __name__ == '__main__':
 	unittest.main()
+
