@@ -46,10 +46,13 @@ jobs:
       with:
         tags: test-image:latest
         push: false
+        load: true  # Important: loads the image into Docker daemon
+        
     - uses: addnab/docker-run-action@v3
       with:
         image: test-image:latest
-        run: echo "hello world"  
+        options: --pull never
+        run: echo "hello world"
         
       
           
