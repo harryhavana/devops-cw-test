@@ -51,7 +51,10 @@ jobs:
     - name: Test Docker image
       run: |
         docker image ls -a
-        docker ps -a
         docker container run --rm --detach test
+        docker ps -a
+        docker exec -it test sh
+        echo "Hello from inside the container", here's a list of contents..."
+        ls -la
       
           
