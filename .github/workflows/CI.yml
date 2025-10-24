@@ -51,7 +51,8 @@ jobs:
         
     - name: Test Docker image
       run: |
-        docker container run --interactive --tty --rm weather-ml-app:1.0 bash
+        docker container run --detach --publish 5000:5000 --name weather-ml-app:1.0 
+        docker -it exec weather-ml-app:1.0 sh
         echo "Hello from inside the container. Here's some info about what's inside..."
         ls /
         ls -la
