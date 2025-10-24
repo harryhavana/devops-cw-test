@@ -53,7 +53,7 @@ jobs:
         docker image ls -a
         docker container run --rm --detach --name test test
         docker ps -a
-        docker exec -it test sh
+        docker exec -i test sh
         echo "Hello from inside the container", here's a list of contents..."
         ls -la
       
