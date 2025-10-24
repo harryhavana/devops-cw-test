@@ -45,19 +45,15 @@ jobs:
     - name: Build Docker Image
       uses: docker/build-push-action@v5
       with:
-        context: .
         load: true
         tags: weather-ml-app
         
     - name: Test Docker image
       run: |
-        docker container run --detach weather-ml-app
+        docker run --detach weather-ml-app
         docker exec -it weather-ml-app sh
-        echo "Hello from inside the container. Here's some info about what's inside..."
-        ls /
-        ls -la
-        ps aux
-        cat /etc/issue
+        echo "hello"
+        docker rm --force weather-ml-app
         docker container stop weather-ml-app
       
           
