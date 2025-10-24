@@ -11,15 +11,15 @@ class TestModelAppIntegration(unittest.TestCase):
 	def test_model_app_integration(self):
 		# Valid test input that should work with the trained model
 		form_data = {
-			'temperature': '275.15',   # Kelvin
-			'pressure': '1013',        # hPa
-			'humidity': '85',          # %
-			'wind_speed': '3.6',       # m/s
-			'wind_deg': '180',         # degrees
-			'rain_1h': '0',            # mm
-			'rain_3h': '0',            # mm
-			'snow': '0',               # mm
-			'clouds': '20'             # %
+			'temperature': 275.15,   # Kelvin
+			'pressure': 1013,        # hPa
+			'humidity': 85,          # %
+			'wind_speed': 3.6,       # m/s
+			'wind_deg': 180,         # degrees
+			'rain_1h': 0,            # mm
+			'rain_3h': 0,            # mm
+			'snow': 0,               # mm
+			'clouds': 20             # %
 		}
 
 		response = self.client.post('/', data=form_data)
@@ -37,6 +37,9 @@ class TestModelAppIntegration(unittest.TestCase):
 			'misty', 'rainy', 'smokey', 'thunderstorm'
 		]
 		found = any(weather in html_text for weather in valid_classes)
+
+		print("000000000000")
+		print(html_text)
 		
 		# Ensure that classification is in valid classes, provide an error message if not.
 		self.assertTrue(found, "No valid weather class found in HTML response")
