@@ -50,6 +50,6 @@ jobs:
         
     - name: Test Docker image
       run: |
-        docker run --rm test
+        docker container run --rm test
       
           
