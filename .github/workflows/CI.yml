@@ -50,6 +50,8 @@ jobs:
         
     - name: Test Docker image
       run: |
-        docker container run --rm test
+        docker image ls -a
+        docker ps -a
+        docker container run --rm --detach test
       
           
