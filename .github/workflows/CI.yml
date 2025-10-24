@@ -58,7 +58,9 @@ jobs:
     - name:  Test Docker Image
       uses:  addnab/docker-run-action@v3
       with:
+        context: .
         image: ${{secrets.DOCKERHUB_USERNAME}}/weather-ml-app:1.0
-        shell: bash
         run:
-          echo "Hello from inside the container"
+          echo "Hello from inside the container. Here are the contents"
+          ls
+          
