@@ -17,6 +17,9 @@ jobs:
       with:
         python-version: '3.12.3'
 
+    - name: Set up Docker
+      uses: docker/setup-docker-action@v4
+
     - name: Install Dependencies
       run: |
         python3 -m venv testVenv
