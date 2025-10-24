@@ -45,9 +45,17 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build & Push Docker Image
+    - name: Build Docker Image
       uses: docker/build-push-action@v5
       with:
         context: .
-        push: true
+        push: false
         tags: ${{secrets.DOCKERHUB_USERNAME}}/weather-ml-app:1.0
+    
+    - name:  Test Docker Image
+      uses:  addnab/docker-run-action@v3
+      with:
+        image: ${{secrets.DOCKERHUB_USERNAME}}/weather-ml-app:1.0
+        shell: bash
+        run:
+          echo "Hello from inside the container"
