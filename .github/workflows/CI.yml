@@ -57,7 +57,7 @@ jobs:
     - name:  Test Docker Image
       uses:  addnab/docker-run-action@v3
       with:
-        image: weather-ml-app
+        image: docker.io/library/weather-ml-app:1.0
         run: |
           echo "Hello from inside the container. Here are the contents"
           ls
