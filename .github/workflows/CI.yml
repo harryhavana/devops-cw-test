@@ -51,14 +51,13 @@ jobs:
     - name: Build Docker Image
       uses: docker/build-push-action@v5
       with:
-        context: .
         push: false
-        tags: ${{secrets.DOCKERHUB_USERNAME}}/weather-ml-app:1.0
+        tags: weather-ml-app:1.0
     
     - name:  Test Docker Image
       uses:  addnab/docker-run-action@v3
       with:
-        image: ${{secrets.DOCKERHUB_USERNAME}}/weather-ml-app
+        image: weather-ml-app
         run: |
           echo "Hello from inside the container. Here are the contents"
           ls
