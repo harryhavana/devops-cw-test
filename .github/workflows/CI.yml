@@ -42,24 +42,15 @@ jobs:
         source testVenv/bin/activate
         python3 -m unittest tests/unit_test.py
 
-    - name: Docker Login
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    - name: Build Docker Image
+    - name: Build and Test Docker Image
       uses: docker/build-push-action@v5
       with:
         push: false
         tags: weather-ml-app:1.0
-        outputs: type=docker,dest=weather-ml-app.tar
-    
-    - name:  Test Docker Image
-      run: |
-        docker load --input weather-ml-app.tar
-        docker ps -a
-        docker exec -it weather-ml-app bash
-        echo "Hello from inside the container"
-        ls
+    - uses: addnab/docker-run-action@v3
+      with:
+        image: weather-ml-app:1.0
+        run: |
+          docker ps -a
+          echo "hello world"
           
