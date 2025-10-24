@@ -46,7 +46,9 @@ jobs:
       with:
         tags: test-image:latest
         push: false
-        load: true  # Important: loads the image into Docker daemon
+        load: true
+        builder: ${{ env.DOCKER_DEFAULT_PLATFORM }}
+        # Or try without buildx entirely:
         
     - uses: addnab/docker-run-action@v3
       with:
