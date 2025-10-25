@@ -42,13 +42,31 @@ jobs:
         source testVenv/bin/activate
         python3 -m unittest tests/unit_test.py
 
-    - uses: docker/build-push-action@v2
+    - name: Docker Login
+      uses: docker/login-action@v3
       with:
-        tags: test
-        load: true
-                
-    - name: test
-      run: | 
-        docker run --detach --name test test
-        docker exec -i test sh echo "hello from inside the container"
-        docker exec -i test sh ls
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+    - name: Create Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:1.0
+        push: false
+
+    - name: Test container
+      uses: addnab/docker-run-action@v3
+      with:
+        image: ${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:1.0
+        run: |
+          echo "Hello from inside the container. Here is the list output from the root directory and running processes..."
+          ls /
+          ps aux	
+          
+    - name: Push image
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:1.0
+        push: true
