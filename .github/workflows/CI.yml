@@ -11,6 +11,32 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12.3'
+
+    - name: Install dependencies
+      run: |
+        python3 -m venv flaskappenv  
+        source flaskappenv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Run smoke test
+      run: |
+        source flaskappenv/bin/activate
+        python3 -m unittest tests/smoke_test.py
+
+    - name: Run unit test
+      run: |
+        source flaskappenv/bin/activate
+        python3 -m unittest tests/unit_test.py
+    
+    - name: Run integration test
+      run: |
+        source flaskappenv/bin/activate
+        python3 -m unittest tests/integration_test.py
+
     - name: Docker Login
       uses: docker/login-action@v3
       with:
