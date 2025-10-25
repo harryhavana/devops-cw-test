@@ -50,8 +50,5 @@ jobs:
     - name: test
       run: | 
         docker run --detach --name test test
-        docker exec test sh
-        echo "hello from inside the container"
-        ls
-      
+        echo "hello" | docker exec test sh
           
