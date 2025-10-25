@@ -52,5 +52,6 @@ jobs:
         docker run --detach --name test test
         docker exec test sh
         echo "hello from inside the container"
+        ls
       
           
