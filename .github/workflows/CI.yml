@@ -57,6 +57,12 @@ jobs:
         run: |
           echo "Hello from inside the container. Here is the list output from the root directory..."
           ls /
+
+    - name: Test container comparison
+      run: |
+        echo "Hello from the GitHub Actions workspace. Here is the list output from the root directory for comparison..."
+        ls /
+    
     - name: Push image
       uses: docker/build-push-action@v6
       with:
