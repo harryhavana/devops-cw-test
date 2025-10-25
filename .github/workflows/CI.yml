@@ -49,8 +49,7 @@ jobs:
                 
     - name: test
       run: | 
-        output=$(docker run --rm --detach test echo "hello")
-        echo "$output"
+        docker run --detach -i test bash -c "echo hello"
         
       
           
