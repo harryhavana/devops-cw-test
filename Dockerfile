@@ -1,9 +1,8 @@
 FROM python:3.9-slim
 
 # Install dependencies
-RUN pip install flask gunicorn
-RUN pip install numpy
-RUN pip install scikit-learn
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
 # Copy the rest of the application code
 COPY app.py .
