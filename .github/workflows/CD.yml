@@ -14,7 +14,7 @@ jobs:
       - name: Make multiple users script executable
         run: chmod +x ./scripts/multiple_users.sh
       - name: Deploy updated weather-ml-app image
-        run: kubectl set image deployments/weather-ml-app-deployment weather-ml-app-container=harryhavana/weather-ml-app:latest
+        run: kubectl set image deployments/weather-ml-app-deployment weather-ml-app-container=harryhavana/weather-ml-app:1.0
       - name: Simulate multiple app users during deployment
         run: ./scripts/multiple_users.sh
          
