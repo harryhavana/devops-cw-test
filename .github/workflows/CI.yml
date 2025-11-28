@@ -47,13 +47,13 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         context: .
-        tags: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:1.0.0, ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:1.0.0, ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:latest
         push: false
 
     - name: Test container
       uses: addnab/docker-run-action@v3
       with:
-        image: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:latest
+        image: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:latest
         run: |
           echo "Hello from inside the container. Here is the list output from the root directory..."
           ls /
@@ -67,5 +67,5 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         context: .
-        tags: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:1.0.0, ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:1.0.0, ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:latest
         push: true
