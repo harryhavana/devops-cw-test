@@ -9,9 +9,15 @@ jobs:
     runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - run: |
-         echo 'Deploying updated weather-ml-app image'
-         kubectl set image deployments/weather-ml-app-deployment weather-ml-app-container=harryhavana/weather-ml-app:latest && ./multiple_users.sh
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Make multiple users script executable
+        run: chmod +x ./scripts/multiple_users.sh
+      - name: Deploy updated weather-ml-app image
+        run: kubectl set image deployments/weather-ml-app-deployment weather-ml-app-container=harryhavana/weather-ml-app:latest
+      - name: Simulate multiple app users during deployment
+        run: ./scripts/multiple_users.sh
+         
   on-failure:
     runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
