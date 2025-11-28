@@ -40,20 +40,20 @@ jobs:
     - name: Docker Login
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        username: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build image
       uses: docker/build-push-action@v6
       with:
         context: .
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/test:1.0.1, ${{ secrets.DOCKERHUB_USERNAME }}/test:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:1.0.0, ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:latest
         push: false
 
     - name: Test container
       uses: addnab/docker-run-action@v3
       with:
-        image: ${{ secrets.DOCKERHUB_USERNAME }}/test:latest
+        image: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:latest
         run: |
           echo "Hello from inside the container. Here is the list output from the root directory..."
           ls /
@@ -67,5 +67,5 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         context: .
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/test:1.0, ${{ secrets.DOCKERHUB_USERNAME }}/test:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:1.0.0, ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/test:latest
         push: true
