@@ -9,27 +9,11 @@ jobs:
     runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Make multiple users script executable
-        run: chmod +x ./scripts/multiple_users.sh
       - name: Deploy updated weather-ml-app image
         run: kubectl set image deployments/weather-ml-app-deployment weather-ml-app-container=harryhavana/weather-ml-app:1.0
-      - name: Simulate multiple app users during deployment
-        run: ./scripts/multiple_users.sh
-      - name: Show pods as deployment updates
-        run: kubectl get pods
-      - name: Show pods as deployment updates (+5 seconds)
-        run: |
-          sleep (5)
-          kubectl get pods
-      - name: Show pods as deployment updates (+10 seconds)
-        run: |
-          sleep (5)
-          kubectl get pods
-         
   on-failure:
     runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
-      - run: echo 'CD workflow not started - CI Pipeline failed to complete'
+      - name: CI Pipeline error
+        run: echo 'CD workflow not started - CI Pipeline failed to complete'
