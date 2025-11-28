@@ -17,6 +17,16 @@ jobs:
         run: kubectl set image deployments/weather-ml-app-deployment weather-ml-app-container=harryhavana/weather-ml-app:1.0
       - name: Simulate multiple app users during deployment
         run: ./scripts/multiple_users.sh
+      - name: Show pods as deployment updates
+        run: kubectl get pods
+      - name: Show pods as deployment updates (+5 seconds)
+        run: |
+          sleep (5)
+          kubectl get pods
+      - name: Show pods as deployment updates (+10 seconds)
+        run: |
+          sleep (5)
+          kubectl get pods
          
   on-failure:
     runs-on: self-hosted
