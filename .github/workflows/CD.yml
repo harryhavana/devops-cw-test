@@ -11,7 +11,7 @@ jobs:
     steps:
       - run: |
          echo 'Deploying updated weather-ml-app image'
-         kubectl set image deployments/weather-ml-app-deployment weather-ml-app=harryhavana/weather-ml-app:latest && ./multiple_users.sh
+         kubectl set image deployments/weather-ml-app-deployment weather-ml-app-container=harryhavana/weather-ml-app:latest && ./multiple_users.sh
   on-failure:
     runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
