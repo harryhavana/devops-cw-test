@@ -23,11 +23,11 @@ jobs:
 
       - name: Show pods status during update
         run: |
-          kubectl show pods
+          kubectl get pods
           sleep 5s
-          kubectl show pods
+          kubectl get pods
           sleep 5s
-          kubectl show pods
+          kubectl get pods
                    
   on-failure:
     runs-on: self-hosted
