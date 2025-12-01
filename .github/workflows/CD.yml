@@ -1,26 +1,31 @@
 name: CD pipeline
 on:
+  # Set this workflow to run when the CI Pipeline completes
   workflow_run:
     workflows: [CI Pipeline]
     types: [completed]
 
 jobs:
+  # The CD Pipeline tasks only run if CI Pipeline completed successfully 
   on-success:
+    # Define the job to be executed by the GitHub Actions Runner
     runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Make multiple users script executable
-        run: chmod +x ./scripts/multiple_users.sh
-      
+      # Deploys the latest version of the weather-ml-app, created in the CI Pipeline, on the cluster
       - name: Deploy updated weather-ml-app image on Kubernetes cluster
-        run: kubectl set image deployments/weather-ml-app-deployment weather-ml-app-container=harryhavana/weather-ml-app:1.latest
+        run: kubectl set image deployments/weather-ml-app-deployment weather-ml-app-container=mrrightsa/weather-ml-app:1.0.1
 
-      - name: Simulate multiple users to evidence no service loss during update
-        run: ./scripts/multiple_users.sh
+      # For evidential purposes to show no loss of service, simulate multiple users of the app
+      - name: Simulate multiple users
+        run: |
+          for i in {1..20}
+          do
+            echo 'User:'$i
+            #curl http://192.168.49.2:30001|head -n 2
+          done
 
+      # For evidential purposes, show the pods being updated over a period of 10 seconds
       - name: Show pods status during update
         run: |
           kubectl get pods
@@ -29,6 +34,7 @@ jobs:
           sleep 5s
           kubectl get pods
                    
+  # If CI Pipeline did not complete successfully, display an error message
   on-failure:
     runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
