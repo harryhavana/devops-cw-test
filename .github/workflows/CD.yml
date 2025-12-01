@@ -22,7 +22,7 @@ jobs:
           for i in {1..20}
           do
             echo 'User:'$i
-            #curl http://192.168.49.2:30001|head -n 2
+            curl $(minikube ip):30001|head -n 2
           done
 
       # For evidential purposes, show the pods being updated over a period of 10 seconds
