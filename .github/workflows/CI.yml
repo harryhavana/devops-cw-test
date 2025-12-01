@@ -8,20 +8,25 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    # Clone repo into GitHub Actions workspace
     - name: Checkout
       uses: actions/checkout@v3
 
+    # Install Python in GitHub Actions workspace
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.12.3'
 
+  # Create a Python virutal environment to work from in GitHub Actions workspace and install app dependencies
     - name: Install dependencies
       run: |
         python3 -m venv flaskappenv  
         source flaskappenv/bin/activate
         pip install -r requirements.txt
 
+    # Run the three test scripts in separate steps
+    # Using the -W ignore flag on test commands to suppress the irrelevant warning messages
     - name: Run smoke test
       run: |
         source flaskappenv/bin/activate
@@ -37,35 +42,43 @@ jobs:
         source flaskappenv/bin/activate
         python3 -W ignore -m unittest tests/unit_test.py
 
+    # Log in to docker using credentials stored as secrets
     - name: Docker Login
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    # Build updated Docker image from Dockerfile. Not pushing to Docker Hub immediately, as there are some test to carry out
+    # Use two tags on the image. One is the updated version number, and the other marks this as the latest image
+    # A more sophisticated workflow would dynamically increment the version number, but that seems overkill for this
+    # exercise
     - name: Build image
       uses: docker/build-push-action@v6
       with:
         context: .
-        tags: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:1.0.0, ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:1.0.1, ${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:latest
         push: false
 
+    # Run a command inside the container. ls command used to show container contents  
     - name: Test container
       uses: addnab/docker-run-action@v3
       with:
-        image: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:latest
+        image: ${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:1.0.1
         run: |
           echo "Hello from inside the container. Here is the list output from the root directory..."
           ls /
 
+    # For comparison, run the ls command from GitHub Actions workspace to confirm different files
     - name: Test container comparison
       run: |
         echo "Hello from the GitHub Actions environment. Here is the list output from the root directory for comparison..."
         ls /
     
+    # Push image to Docker Hub. 
     - name: Push image
       uses: docker/build-push-action@v6
       with:
         context: .
-        tags: ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:1.0.0, ${{ secrets.DOCKERHUB_USERNAME_STEVEN }}/james_test:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME}}/weather-ml-app:1.0.1, ${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:latest
         push: true
